@@ -10,7 +10,7 @@ on:
 
 jobs:
   lint:
-    runs-on: ubuntu-latest  # The operating system for the runner
+    runs-on: self-hosted  # The operating system for the runner
 
     steps:
       # Step 1: Checkout the code
