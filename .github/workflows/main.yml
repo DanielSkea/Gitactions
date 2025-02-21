@@ -22,6 +22,20 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'  # Specify your Python version here
+           steps:
+      - name: Check Python Installed on EC2
+        run: |
+          python3.8 --version || echo "Python 3.8 is not installed"
+
+      - name: Set up Python 3.8
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+          check-latest: true  # Ensures it fetches the latest compatible version
+          cache: 'pip'  # Optional: Enables caching for dependencies
+          
+      - name: Verify Python Version
+        run: python --version  # Should now return Python 3.8
 
       # Step 3: Install dependencies
       - name: Install dependencies
