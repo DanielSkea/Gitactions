@@ -1,4 +1,4 @@
-name: Lint Code
+name: Lint Code  # Define the name of the workflow
 
 on:
   push:
@@ -10,39 +10,36 @@ on:
 
 jobs:
   lint:
-    runs-on: self-hosted  # The operating system for the runner
+    runs-on: self-hosted  # Use a self-hosted EC2 runner
 
     steps:
-      # Step 1: Checkout the code
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Step 2: Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.8'  # Specify your Python version here
-           steps:
+      # Step 2: Check Python Installed on EC2
       - name: Check Python Installed on EC2
         run: |
           python3.8 --version || echo "Python 3.8 is not installed"
 
+      # Step 3: Set up Python 3.8
       - name: Set up Python 3.8
         uses: actions/setup-python@v2
         with:
           python-version: '3.8'
-          check-latest: true  # Ensures it fetches the latest compatible version
-          cache: 'pip'  # Optional: Enables caching for dependencies
-          
-      - name: Verify Python Version
-        run: python --version  # Should now return Python 3.8
+          check-latest: true
+          cache: 'pip'  # Optional: Caches dependencies to speed up future runs
 
-      # Step 3: Install dependencies
+      # Step 4: Verify Python Version
+      - name: Verify Python Version
+        run: python --version  # Should return Python 3.8
+
+      # Step 5: Install dependencies
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install flake8  # Install flake8 linter
+          pip install flake8  # Install the linter
 
-      # Step 4: Run the linter
+      # Step 6: Run flake8 linter
       - name: Run flake8
-        run: flake8 .  # Lint the entire repository
+        run: flake8 .  # Lint the
